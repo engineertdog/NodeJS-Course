@@ -7,7 +7,7 @@
 const handler = {};
 
 // Create a hello route function.
-handler.hello = (data, callback) => {
+handler.hello = (data) => {
     // Set a default message.
     let message = "Hello, anonymous user. If you enter your name in a query string with a key of 'name', I will greet you by name.";
 
@@ -22,13 +22,23 @@ handler.hello = (data, callback) => {
     }
 
     // Return the status and message.
-    callback(200, {"message": message});
+    return Promise.resolve({
+        statusCode: 200,
+        payload: {
+            message: message
+        }
+    });
 };
 
 // Create the default Not Found function.
-handler.notFound = (data, callback) => {
+handler.notFound = (data) => {
     // Return a 404 error and default message.
-    callback(404, {"Error:": "Resource not found."});
+    return Promise.resolve({
+        statusCode: 404,
+        payload: {
+            error: "Resource not found."
+        }
+    });
 };
 
 // Export the module.

@@ -75,24 +75,25 @@ const server = async (req, res) => {
          * the user is trying to invoke.
          *
          */
-        handler(data, (statusCode, payload) => {
-            // Use the status code called back by the handler, or default to 200.
-            statusCode = (typeof statusCode === "number") ? statusCode : 200;
+        handler(data)
+            .then(({statusCode, payload}) => {
+                // Use the status code called back by the handler, or default to 200.
+                statusCode = (typeof statusCode === "number") ? statusCode : 200;
 
-            // Use the payload called back by the handler, or default to an empty object.
-            payload = (typeof payload === "object") ? payload : {};
+                // Use the payload called back by the handler, or default to an empty object.
+                payload = (typeof payload === "object") ? payload : {};
 
-            // Convert the payload to a JSON string.
-            const payloadJSON = JSON.stringify(payload);
+                // Convert the payload to a JSON string.
+                const payloadJSON = JSON.stringify(payload);
 
-            // Return the response.
-            res.setHeader("Content-Type", "application/json");
-            res.writeHead(statusCode);
-            res.end(payloadJSON);
+                // Return the response.
+                res.setHeader("Content-Type", "application/json");
+                res.writeHead(statusCode);
+                res.end(payloadJSON);
 
-            // Log the request
-            console.log(`[${method}: ${statusCode}] Request at ${trimmedPath}`);
-        });
+                // Log the request
+                console.log(`[${method}: ${statusCode}] Request at ${trimmedPath}`);
+            });
     });
 };
 
