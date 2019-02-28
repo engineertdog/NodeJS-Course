@@ -76,9 +76,9 @@ const server = async (req, res) => {
          *
          */
         handler(data)
-            .then(({statusCode, payload}) => {
+            .then(({status, payload}) => {
                 // Use the status code called back by the handler, or default to 200.
-                statusCode = (typeof statusCode === "number") ? statusCode : 200;
+                status = (typeof status === "number") ? status : 200;
 
                 // Use the payload called back by the handler, or default to an empty object.
                 payload = (typeof payload === "object") ? payload : {};
@@ -88,11 +88,11 @@ const server = async (req, res) => {
 
                 // Return the response.
                 res.setHeader("Content-Type", "application/json");
-                res.writeHead(statusCode);
+                res.writeHead(status);
                 res.end(payloadJSON);
 
                 // Log the request
-                console.log(`[${method}: ${statusCode}] Request at ${trimmedPath}`);
+                console.log(`[${method}: ${status}] Request at ${trimmedPath}`);
             });
     });
 };

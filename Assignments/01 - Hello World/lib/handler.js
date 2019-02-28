@@ -23,7 +23,7 @@ handler.hello = (data) => {
 
     // Return the status and message.
     return Promise.resolve({
-        statusCode: 200,
+        status: 200,
         payload: {
             message: message
         }
